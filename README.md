@@ -25,82 +25,108 @@ Open terminal and try execute some kali linux commands
 Find out the ip address of the attackers system
 ## OUTPUT:
 
+![ifconfig](img/01_ifcon.png)
 
-Invoke msfconsole:
+
+Invoke msfconsole
+
 ## OUTPUT:
 
+![msfconsole](img/02_msfconsole.png)
 
-Type help or a question mark "?" to see the list of all available commands you can use inside msfconsole.
+Type help or a question mark "?" to see the list of all available commands you can use inside msfconsole
 
+## OUTPUT:
 
+![help](img/03_help.png)
 
 
 Port Scanning:
-Following command is executed for scanning the systems on our local area network with a TCP scan (-sT) looking for open ports between 1 and 1000 (-p1-1000).
-msf >  nmap -sT 192.168.1810/24 -p1-1000  (Replace with appropriate IP Address)
+
+msf >  nmap -sT 192.168.1810/24 -p1-1000
+
 ## OUTPUT:
 
-step4:
-use the db-nmap command to scan and save the results into Metasploit's postgresql attached database. In that way, you can use those results in the exploitation stage later.
+![nmap](img/04_nmap.png)
+
 
 scan the targets with the command db_nmap as follows.
 msf > db_nmap 192.168.181.0/24
-## OUTPUT:
+
+# OUTPUT:
+
+![db_nmap](img/05_db_nmap.png)
 
 
-
-Metasploit has a multitude of scanning modules built in. If we open another terminal, we can navigate to Metasploit's auxiliary modules and list all the scanner modules.
 cd /usr/share /metasploit-framework/modules/auxiliary
 kali > ls -l
+
 ## OUTPUT:
 
+![ls-l](img/06_ls-l.png)
 
 
-Search is a powerful command in Metasploit that you can use to find what you want to locate. 
 msf >search name:Microsoft type:exploit
+
 ## OUTPUT:
 
-
+![searchname](img/07_searchname.png)
+![searchname](img/08_searchname2.png)
 
 The info command provides information regarding a module or platform,
+
+## OUTPUT:
+
+![info](img/09_info.png)
+
 
 Before beginning, set up the Metasploit database by starting the PostgreSQL server and initialize msfconsole database as follows:
 systemctl start postgresql
 msfdb init
-## OUTPUT:
-
-
-
 
 ## MYSQL ENUMERATION
 Find the IP address of the Metasploitable machine first. Then, use the db_nmap command in msfconsole with Nmap flags to scan the MySQL database at 3306 port.
-db_nmap -sV -sC -p 3306 <metasploitable_ip_address>
+
+db_nmap -sV -sC -p 3306<metasploitable_ip_address>
 
 ## OUTPUT:
+
+![dbnmap](img/10_dbnmap.png)
+
+
 
 Use the search option to look for an auxiliary module to scan and enumerate the MySQL database.
+
 search type:auxiliary mysql
+
 ## OUTPUT:
 
+![seachtye](img/11_searchtype.png)
 
 use the auxiliary/scanner/mysql/mysql_version module by typing the module name or associated number to scan MySQL version details.
+
 use 11
-Or:
-use auxiliary/scanner/mysql/mysql_version
+
+
 ## OUTPUT:
 
-
+![use11](img/11_use11.png)
 
 
 Use the set rhosts command to set the parameter and run the module, as follows:
+
+
 ## OUTPUT:
 
+![set_rhosts](img/12_set_rhosts.png)
 
 
 After scanning, you can also brute force MySQL root account via Metasploit's auxiliary(scanner/mysql/mysql_login) module.
+
+
 ## OUTPUT:
 
-
+![use_mysql_login](img/13_use_mysqllogin.png)
 
 
 set the PASS_FILE parameter to the wordlist path available inside /usr/share/wordlists:
@@ -109,11 +135,10 @@ Then, specify the IP address of the target machine with the RHOSTS command.
 set RHOSTS <metasploitable-ip-address>
 Set BLANK_PASSWORDS to true in case there is no password set for the root account.
 set BLANK_PASSWORDS true
+
 ## OUTPUT:
 
-
-
-
+![set_PASSFILE](img/14_set_PASSFILE.png)
 
 
 ## RESULT:
